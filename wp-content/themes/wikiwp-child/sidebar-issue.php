@@ -72,7 +72,7 @@
                             ?>
                         </div>
 
-                        <? $tags = wikiwp_child_get_tags($post);
+                        <? $tags = wwe_get_tags($post);
                            if ($tags): ?>
                             Tags: <?= $tags ?>
                         <? endif; ?>
@@ -97,14 +97,6 @@
                 <?php
             }
             ?>
-        </div>
-
-        <div class="dynamicSidebar">
-            <div class="row sidebarContent">
-                <div class="col-md-12">
-                    <?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar() ) : endif; ?>
-                </div>
-            </div>
         </div>
     </div>
 </aside>

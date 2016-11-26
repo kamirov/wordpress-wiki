@@ -1,1 +1,1 @@
-This project was developed as part of my duties while employed at the Space Avionics and Instrumentation Laboratory (SAIL) at Ryerson University in Canada.
+This project was developed as part of my duties while employed at the Space Avionics and Instrumentation Laboratory (SAIL) at Ryerson University in Canada. Thank you to John Enright and the gang for their continued input on how to improve it.

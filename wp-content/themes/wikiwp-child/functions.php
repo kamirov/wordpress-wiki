@@ -1,6 +1,6 @@
 <?
 
-/* SAIL_PHP_INI
+/* WIKI_PHP_INI
    ============ */
 
 @ini_set( 'upload_max_size' , '64M' );
@@ -8,7 +8,7 @@
 @ini_set( 'max_execution_time', '300' );
 
 
-/* SAIL_CONSTANTS
+/* WIKI_CONSTANTS
    ============== */
 
 // Uploads
@@ -38,14 +38,7 @@ define('UPDATES_DROPDOWNS_SHORTCODE', 'updates-dropdowns');
 define('UPDATES_SHOW_SHORTCODE', 'updates-show');
 
 
-// Sensors
-define('SENSORS_SHOW_SHORTCODE', 'sensors-show');
-define('SENSORS_INVENTORY_SHORTCODE', 'sensors-inventory');
-define('SENSORS_AD_SHORTCODE', 'sensors-ad');
-define('SENSORS_AD_RANGE_SHORTCODE', 'sensors-ad-range');
-
-
-/* SAIL_CHILD_THEME_BOOTSTRAP
+/* WIKI_CHILD_THEME_BOOTSTRAP
    ========================== */
 
 function my_theme_enqueue_styles() {
@@ -57,39 +50,39 @@ function my_theme_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'my_theme_enqueue_styles' );
 
 // load stylesheet for bootstrap
-function wikiwp_child_load_bootstrap_styles() {                       
+function wwe_load_bootstrap_styles() {                       
   	wp_register_style( 'bootstrap-style', 
     get_template_directory_uri().'/css/bootstrap.min.css', array(), false, 'all' );    
   	wp_enqueue_style( 'bootstrap-style' );
 }
-add_action('wp_enqueue_scripts', 'wikiwp_child_load_bootstrap_styles');
+add_action('wp_enqueue_scripts', 'wwe_load_bootstrap_styles');
 
 // load stylesheet for the theme
-function wikiwp_child_load_styles() {                       
+function wwe_load_styles() {                       
   	wp_register_style( 'theme_style', 
     get_template_directory_uri().'/style.css', array(), false, 'all' );    
   	wp_enqueue_style( 'theme_style' );
 }
-add_action('wp_enqueue_scripts', 'wikiwp_child_load_styles');
+add_action('wp_enqueue_scripts', 'wwe_load_styles');
 
 // load stylesheet for navigation
-function wikiwp_child_load_navigation_side_styles() {                       
+function wwe_load_navigation_side_styles() {                       
   	wp_register_style( 'navigation-side-style', 
     get_template_directory_uri().'/css/navigation-side.css', array(), false, 'all' );    
   	wp_enqueue_style( 'navigation-side-style' );
 }
-add_action('wp_enqueue_scripts', 'wikiwp_child_load_navigation_side_styles');
+add_action('wp_enqueue_scripts', 'wwe_load_navigation_side_styles');
 
 // load stylesheet for wiki
-function wikiwp_child_load_wiki_styles() {                       
+function wwe_load_wiki_styles() {                       
     wp_register_style( 'wiki-style', 
     get_template_directory_uri().'/css/wiki.css', array(), false, 'all' );    
     wp_enqueue_style( 'wiki-style' );
 }
-add_action('wp_enqueue_scripts', 'wikiwp_child_load_wiki_styles');
+add_action('wp_enqueue_scripts', 'wwe_load_wiki_styles');
 
 // Load scripts for wiki
-function wikiwpchild_function_script() {
+function wwe_function_script() {
     wp_enqueue_script(
         'functions-script',
         get_template_directory_uri() . '/js/functions.js',
@@ -104,14 +97,91 @@ function wikiwpchild_function_script() {
 
     wp_enqueue_script(
         'child-script',
-        get_stylesheet_directory_uri() . '/js/sailwiki.js',
+        get_stylesheet_directory_uri() . '/js/wiki.js',
         array( 'jquery' )
     );
 }
-add_action( 'wp_enqueue_scripts', 'wikiwpchild_function_script' );
+add_action( 'wp_enqueue_scripts', 'wwe_function_script' );
+
+/* WIKI_CUSTOM_POST_TYPES 
+   ====================== */
+
+add_action( 'init', 'cptui_register_my_cpts' );
+function cptui_register_my_cpts() {
+
+	$labels = array(
+		"name" => __( 'Updates', 'wwe' ),
+		"singular_name" => __( 'Update', 'wwe' ),
+		"menu_name" => __( 'Updates', 'wwe' ),
+		"all_items" => __( 'All Updates', 'wwe' ),
+		"add_new" => __( 'Add New', 'wwe' ),
+		"add_new_item" => __( 'Add New Update', 'wwe' ),
+		"edit_item" => __( 'Edit Update', 'wwe' ),
+		"new_item" => __( 'New Update', 'wwe' ),
+		"view_item" => __( 'View Update', 'wwe' ),
+		"search_items" => __( 'Search Update', 'wwe' ),
+		"not_found" => __( 'No Updates found', 'wwe' ),
+		"not_found_in_trash" => __( 'No Updates found in trash', 'wwe' ),
+		"parent_item_colon" => __( 'Parent Update', 'wwe' ),
+		"archives" => __( 'Update archives', 'wwe' ),
+		"insert_into_item" => __( 'Insert into update', 'wwe' ),
+		"uploaded_to_this_item" => __( 'Uploaded to this update', 'wwe' ),
+		"filter_items_list" => __( 'Filter updates list', 'wwe' ),
+		"items_list_navigation" => __( 'Updates list navigation', 'wwe' ),
+		"items_list" => __( 'Updates list', 'wwe' ),
+		"parent_item_colon" => __( 'Parent Update', 'wwe' ),
+		);
+
+	$args = array(
+		"label" => __( 'Updates', 'wwe' ),
+		"labels" => $labels,
+		"description" => "Regular, templated progress updates for graduate students",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => false,
+		"rest_base" => "",
+		"has_archive" => false,
+		"show_in_menu" => true,
+				"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"rewrite" => array( "slug" => "update", "with_front" => true ),
+		"query_var" => true,
+		"menu_icon" => "dashicons-calendar-alt",
+		"supports" => array( "title", "editor", "comments", "revisions", "author" ),					);
+	register_post_type( "update", $args );
+
+	$labels = array(
+		"name" => __( 'Papers', 'wwe' ),
+		"singular_name" => __( 'Paper', 'wwe' ),
+		);
+
+	$args = array(
+		"label" => __( 'Papers', 'wwe' ),
+		"labels" => $labels,
+		"description" => "Summary pages for papers. Includes links to relevant detailed pages.",
+		"public" => true,
+		"publicly_queryable" => true,
+		"show_ui" => true,
+		"show_in_rest" => false,
+		"rest_base" => "",
+		"has_archive" => false,
+		"show_in_menu" => true,
+				"exclude_from_search" => false,
+		"capability_type" => "post",
+		"map_meta_cap" => true,
+		"hierarchical" => false,
+		"rewrite" => array( "slug" => "paper", "with_front" => true ),
+		"query_var" => true,
+		"menu_icon" => "dashicons-media-document",
+		"supports" => array( "title", "editor", "excerpt", "comments", "revisions", "author" ),					);
+	register_post_type( "paper", $args );
+}
 
 
-/* SAIL_UPDATES
+/* WIKI_UPDATES
    ============ */
 
 function updates_name_and_slug_change( $post_ID, $post, $update ) {
@@ -159,7 +229,7 @@ function updates_name_and_slug_change( $post_ID, $post, $update ) {
 add_action( 'save_post', 'updates_name_and_slug_change', 10, 3 );
 
 
-/* SAIL_AUTH
+/* WIKI_AUTH
    ========= */
 
 // The HTTP Authentication plugin handles what happens if wp-login.php is viewed. This causes any page to log an HTTP authenticated user
@@ -187,7 +257,7 @@ function apache_login()
 add_action('init', 'apache_login');
 
 
-/* SAIL_ENTRIES
+/* WIKI_ENTRIES
    ============*/
 
 /**
@@ -195,9 +265,9 @@ add_action('init', 'apache_login');
  *
  * @return string formatted output in HTML
  */
-function wikiwp_get_article_tags($post) {
+function wwe_get_article_tags($post) {
 
-    _e('Tags', 'wikiwp');
+    _e('Tags', 'wwe');
     echo ':&nbsp;';
     $tag = get_the_tags();
     if (! $tag) {
@@ -213,7 +283,7 @@ function wikiwp_get_article_tags($post) {
  *
  * @return string formatted output in HTML
  */
-function wikiwp_child_get_tags($post) {
+function wwe_get_tags($post) {
 
     $tags = get_the_tags();
     $tag_output = '';
@@ -236,15 +306,15 @@ function wikiwp_child_get_tags($post) {
  *
  * @return string formatted output in HTML
  */
-function wikiwp_child_get_post_excerpt($post, $show_details = true, $show_tags = true, $show_prefixes = true) {
-    $wikiwpAdditionalExcerptPostClasses = array(
+function wwe_get_post_excerpt($post, $show_details = true, $show_tags = true, $show_prefixes = true) {
+    $wweAdditionalExcerptPostClasses = array(
         'entry',
         'entryTypePostExcerpt'
     );
 
     ?>
 
-    <article <?php post_class($wikiwpAdditionalExcerptPostClasses); ?>>
+    <article <?php post_class($wweAdditionalExcerptPostClasses); ?>>
         <div class="">
             <?
             // echo '<pre>';
@@ -271,7 +341,7 @@ function wikiwp_child_get_post_excerpt($post, $show_details = true, $show_tags =
                 </header>
                 <? if ($show_details): ?>
                     <? if ($show_tags): ?>
-                    <span class="tags"><?= wikiwp_child_get_tags($post); ?></span>
+                    <span class="tags"><?= wwe_get_tags($post); ?></span>
                     <? endif; ?>
                 <div class="entryContent">
                     <?php if (has_excerpt()) the_excerpt() ?>
@@ -303,7 +373,7 @@ function custom_excerpt_length( $length )
 add_filter( 'excerpt_length', 'custom_excerpt_length', 999 );
 
 
-/* SAIL_SHORTCODES
+/* WIKI_SHORTCODES
    =============== */
 
 function display_acf_table($slug, $post_id, $class = '', $extra_rows = array())
@@ -419,7 +489,7 @@ function all_papers($atts)
     );
     if (have_posts()) :
         while (have_posts()) : the_post();
-            wikiwp_child_get_post_excerpt($post, false);
+            wwe_get_post_excerpt($post, false);
         endwhile;
     endif;
     echo '</div>';
@@ -441,7 +511,7 @@ function recent_articles($atts)
     query_posts(array('post_status' => 'publish', 'orderby' => 'date', 'order' => 'DESC' , 'showposts' => $count));
     if (have_posts()) :
         while (have_posts()) : the_post();
-            wikiwp_child_get_post_excerpt($post, false);
+            wwe_get_post_excerpt($post, false);
         endwhile;
     endif;
     echo '</div>';
@@ -499,7 +569,7 @@ function alphabetical_content()
 		    foreach ($posts as $post) 
 		    {
 		        setup_postdata($post);
-		        wikiwp_child_get_post_excerpt($post, false, false, false);
+		        wwe_get_post_excerpt($post, false, false, false);
 		    }
 	    }
 
@@ -507,327 +577,7 @@ function alphabetical_content()
 	}
 
     return ob_get_clean();
-}
-
-// Lists the current in-stock sensors
-function sensors_inventory()
-{
-    $inventory = array();
-    $inventory_html = '';
-
-    $args = array(
-        'post_type' => 'sensor',
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'caller_get_posts'=> 1
-    );
-
-    $q = new WP_Query($args);
- 
-    if ($q->have_posts()) 
-    {
-        while ($q->have_posts())
-        {
-            $q->the_post();
-
-            $header_key = 'header';
-            $body_key = 'body';
-
-            $history = get_field('history');
-            if (!is_array($history))
-            {
-                $history = json_decode($history, true);
-                $header_key = 'h';
-                $body_key = 'b';
-            }
-
-            $num_rows = count($history[$body_key]);
-            
-            for ($i = $num_rows; $i >= 0 ; $i--) 
-            {
-                $row = $history[$body_key][$i];
-                $action = $row[1]['c'];
-                
-                if ($action == 'Sensor-Exit')
-                {
-                    break;
-                }    
-                elseif ($action == 'Sensor-Delivery')
-                {
-                    $received_from = $row[2]['c'];
-                    if (!in_array($received_from, array('Kofi', 'kofi', 'Kofi Amankwah', 'Doug Sinclair')))
-                        $received_from = 'Sinclair Interplanetary';
-
-                    $inventory[] = array(
-                        'date' => $row[0]['c'],
-                        'sensor_name' => get_the_title(),
-                        'url' => get_the_permalink(),
-                        'intended_use' => get_field('intended_use'),
-                        'current_disposition' => get_field('current_disposition'),
-                        'received_from' => $received_from,
-                        'Received_by' => $row[3]['c'],
-                        'notes' => $row[4]['c']
-                    );
-                }
-            }
-        }
-    }
-
-    if ($inventory)
-    {
-        $inventory_html .= '<table class="sortable">';
-            $inventory_html .= '<thead>';
-                $inventory_html .= '<tr>';
-                    $inventory_html .= '<th>Date Received</th>';
-                    $inventory_html .= '<th>Sensor</th>';
-                    $inventory_html .= '<th>Intended Use</th>';
-                    $inventory_html .= '<th>Disposition</th>';
-                    $inventory_html .= '<th>Received From</th>';
-                    $inventory_html .= '<th>Received By</th>';
-                    $inventory_html .= '<th>Notes</th>';
-                $inventory_html .= '</tr>';
-            $inventory_html .= '</thead>';
-            $inventory_html .= '<tbody>';
-            foreach ($inventory as $item) 
-            {
-                $inventory_html .= '<tr>';
-                    $inventory_html .= '<td>'.$item['date'].'</td>';
-                    $inventory_html .= '<td><a href="'.$item['url'].'">'.$item['sensor_name'].'</a></td>';
-                    $inventory_html .= '<td>'.$item['intended_use'].'</td>';
-                    $inventory_html .= '<td>'.$item['current_disposition'].'</td>';
-                    $inventory_html .= '<td>'.$item['received_from'].'</td>';
-                    $inventory_html .= '<td>'.$item['received_by'].'</td>';
-                    $inventory_html .= '<td>'.$item['notes'].'</td>';
-                $inventory_html .= '<tr>';
-            }
-            $inventory_html .= '</tbody>';
-        $inventory_html .= '</table>';
-    }
-    else
-    {
-        $inventory_html = '<h4>No sensors are currently at SAIL</h4>';
-    }
-
-    return $inventory_html;
-    
-    wp_reset_query();  // Restore global post data stomped by the_post().    
-}
-
-// Sensor arrivals/departures
-function sensors_ad()
-{
-    if (isset($_GET['months_back']) && is_numeric($_GET['months_back']))
-    {
-        $months_back = floor($_GET['months_back']);
-
-        // Sanitize
-        if (!$months_back)
-            $months_back = 99999;
-        elseif ($months_back < 0)
-            $months_back = 1;    
-    }
-    else
-    {
-        $months_back = 99999;       // Default is all-time value
-    }
-
-
-    $lim = (new DateTime())->modify("-$months_back months"); 
-
-    $ad = array();
-    $ad_html = '';
-
-    $args = array(
-        'post_type' => 'sensor',
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'caller_get_posts'=> 1
-    );
-
-    $q = new WP_Query($args);
- 
-    if ($q->have_posts()) 
-    {
-        while ($q->have_posts())
-        {
-            $q->the_post();
-
-            $header_key = 'header';
-            $body_key = 'body';
-
-            $history = get_field('history');
-            if (!is_array($history))
-            {
-                $history = json_decode($history, true);
-                $header_key = 'h';
-                $body_key = 'b';
-            }
-            
-            $num_rows = count($history[$body_key]);
-            
-            for ($i = $num_rows; $i >= 0 ; $i--) 
-            {
-                $row = $history[$body_key][$i];
-                $action = $row[1]['c'];
-                
-                if ($action == 'Sensor-Delivery' || $action == 'Sensor-Exit')
-                {
-                    $action_date = $row[0]['c'];
-                    // var_dump($action_date);
-
-                    try {
-                        $action_date_obj = new DateTime($action_date);
-                    } catch (Exception $e) {
-                        continue;                        
-                    }
-
-                    // Don't show if row is too old. Show if there is no date data however
-                    if ($action_date_obj < $lim)
-                        continue;
-
-                    $performed_by = $row[2]['c'];
-                    if (!in_array($performed_by, array('Kofi', 'kofi', 'Kofi Amankwah', 'Doug Sinclair')))
-                        $performed_by = 'Sinclair Interplanetary';
-
-                    $ad[] = array(
-                        'date' => $action_date,
-                        'sensor_name' => get_the_title(),
-                        'url' => get_the_permalink(),
-                        'action' => str_replace('Sensor-', '', $action),
-                        'performed_by' => $performed_by,
-                        'entered_by' => $row[3]['c'],
-                        'notes' => $row[4]['c']
-                    );
-                }
-            }
-        }
-    }
-
-    if ($ad)
-    {
-        usort($ad, 'sensors_ad_sort');
-
-        $ad_html .= '<table class="sortable">';
-            $ad_html .= '<thead>';
-                $ad_html .= '<tr>';
-                    $ad_html .= '<th>Date</th>';
-                    $ad_html .= '<th>Sensor</th>';
-                    $ad_html .= '<th>Action</th>';
-                    $ad_html .= '<th>Performed By</th>';
-                    $ad_html .= '<th>Entered By</th>';
-                    $ad_html .= '<th>Notes</th>';
-                $ad_html .= '</tr>';
-            $ad_html .= '</thead>';
-            $ad_html .= '<tbody>';
-            foreach ($ad as $item) 
-            {
-                $ad_html .= '<tr>';
-                    $ad_html .= '<td>'.$item['date'].'</td>';
-                    $ad_html .= '<td><a href="'.$item['url'].'">'.$item['sensor_name'].'</a></td>';
-                    $ad_html .= '<td>'.$item['action'].'</td>';
-                    $ad_html .= '<td>'.$item['performed_by'].'</td>';
-                    $ad_html .= '<td>'.$item['entered_by'].'</td>';
-                    $ad_html .= '<td>'.$item['notes'].'</td>';
-                $ad_html .= '<tr>';
-            }
-            $ad_html .= '</tbody>';
-        $ad_html .= '</table>';
-    }
-    else
-    {
-        $ad_html = '<h4>No arrivals/departures recorded for that time interval.</h4>';
-    }
-
-//    var_dump($ad);
-
-    return $ad_html;
-}
-
-// Sort by date (asc), action (asc), name (asc)
-function sensors_ad_sort($a, $b)
-{
-    $t1 = strtotime($a['date']);
-    $t2 = strtotime($b['date']);
-
-    if ($t1 === $t2)
-    {
-        $a1 = substr($a['action'], 0, 1);
-        $a2 = substr($b['action'], 0, 1);
-
-        if ($a1 === $a2)
-        {
-            $s1 = $a['sensor_name'];
-            $s2 = $b['sensor_name'];
-
-            if ($s1 === $s2)
-            {
-                return 0;               
-            }
-            else
-            {
-                if ($s1 < $s2)
-                    return -1;
-                else
-                    return 1;                
-            }
-
-        }
-        else
-        {
-            if ($a1 < $a2)
-                return -1;
-            else
-                return 1;
-        }
-    }
-    else
-    {
-        if ($t1 < $t2)
-            return -1;
-        else
-            return 1;
-    }
-}
-
-function sensors_ad_range()
-{
-    if (isset($_GET['months_back']))
-        $months_back = $_GET['months_back'];
-    else
-        $months_back = null;
-
-    $range = '<select class="ad-range default-select-style" onChange="window.location.href=this.value">
-                    <option '.($months_back == 1 ? 'selected' : '').' value="?months_back=1">last month</option>
-                    <option '.($months_back == 3 ? 'selected' : '').' value="?months_back=3">last 3 months</option>
-                    <option '.($months_back == 12 ? 'selected' : '').' value="?months_back=12">last year</option>
-                    <option '.($months_back == 0 ? 'selected' : '').' value="?months_back=0">all time</option>
-              </select>';
-
-    return $range;
-}
-
-function sensors_show()
-{
-    $loop = new WP_Query( array( 'post_type' => 'sensor', 'posts_per_page' => -1 ) ); 
-
-    $html = '';
-    while ( $loop->have_posts() ) : $loop->the_post(); 
-        $html .= '<div class="entryTypePostExcerpt">';
-            $html .= '<div class="entryContainer">';
-                $html .= '<header class="entryHeader">';
-                    $html .= '<h2 class="entryTitle">';
-                        $html .= '<a href="'.get_permalink().'">'.get_the_title().'</a>';
-                    $htnk .= '</h2>'; 
-                $html .= '</header>';
-                $html .= '<div class="postinfo postinfo-excerpt">';
-                    $html .= '<span>Modified: '.get_the_modified_date('g:i a').' - '.get_the_modified_date('F j, Y').'</span>';
-                $html .= '</div>';
-            $html .= '</div>';
-        $html .= '</div>';
-    endwhile;
-
-    return $html;
-}
+};
 
 function get_paper_rows()
 {
@@ -1145,7 +895,7 @@ function register_shortcodes()
 add_action( 'init', 'register_shortcodes');
 
 
-/* SAIL_POST_CONNECTIONS
+/* WIKI_POST_CONNECTIONS
    ===================== */
 
 function setup_post_connection() {
@@ -1203,7 +953,7 @@ function setup_post_connection() {
 add_action( 'p2p_init', 'setup_post_connection' );
 
 
-/* SAIL_ADMIN
+/* WIKI_ADMIN
    ========== */
 
 /**
@@ -1577,7 +1327,7 @@ function wd_hierarchical_tags_register() {
 }
 add_action('init', 'wd_hierarchical_tags_register');
 
-function sail_attachments( $attachments )
+function wiki_attachments( $attachments )
 {
   $args = array(
     // title of the meta box (string)
@@ -1609,9 +1359,9 @@ function sail_attachments( $attachments )
       )
     )
   );
-  $attachments->register( 'sail_attachments', $args ); // unique instance name
+  $attachments->register( 'wiki_attachments', $args ); // unique instance name
 }
-add_action( 'attachments_register', 'sail_attachments' );
+add_action( 'attachments_register', 'wiki_attachments' );
 
 
 function allow_forbidden_mimes($mime_types){
@@ -1620,14 +1370,18 @@ function allow_forbidden_mimes($mime_types){
 }
 add_filter('upload_mimes', 'allow_forbidden_mimes', 1, 1);
 
+function load_editor_style() {
+    add_editor_style( 'editor.css' );
+}
+add_action( 'admin_init', 'load_editor_style' );
 function load_admin_styles() 
 {
     echo '<link rel="stylesheet" type="text/css" href="'.get_stylesheet_directory_uri().'/style.css">';
 }
 add_action('admin_head', 'load_admin_styles');
+add_action('admin_enqueue_scripts', 'load_admin_styles');
 
-
-/* SAIL_MISC_UTILITY
+/* WIKI_MISC_UTILITY
    ================= */
 
 // Get all nth-position elements or $n-key-elements in all subarrays of a 2D array. Note, $arr must be an array of arrays. 
@@ -1642,7 +1396,7 @@ function combine_subarrays($arr, $n = 0) {
 }
 
 
-/* SAIL_MATLAB INTERFACE
+/* WIKI_MATLAB INTERFACE
    ===================== */
 
 // Handles all requests from MATLAB
@@ -1839,11 +1593,11 @@ function matlab_write_attachment()
     if ($meta)
     {
         $meta_attachments = json_decode($meta[0], true);
-        $meta_attachments['sail_attachments'][] = $meta_attachment;
+        $meta_attachments['wiki_attachments'][] = $meta_attachment;
     }
     else
     {
-        $meta_attachments = array('sail_attachments' => array($meta_attachment));
+        $meta_attachments = array('wiki_attachments' => array($meta_attachment));
     }
 
     // print_r(array(json_encode($meta_attachments)));
@@ -1859,7 +1613,7 @@ function matlab_write_attachment()
 add_action( 'init', 'matlab_handler');
 
 
-/* SAIL_MISC
+/* WIKI_MISC
    ========= */
 
 // Allows comments on issues. This can be extened to allow it for other custom post types.

@@ -86,7 +86,7 @@
             foreach ($articles as $post)
             {
                 setup_postdata($post);
-                wikiwp_child_get_post_excerpt($post);
+                wwe_get_post_excerpt($post);
             }            
         }
     ?>

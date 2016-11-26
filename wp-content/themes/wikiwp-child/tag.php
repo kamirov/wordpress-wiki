@@ -44,7 +44,7 @@
         foreach ($articles as $post)
         {
             setup_postdata($post);
-            wikiwp_child_get_post_excerpt($post, false);
+            wwe_get_post_excerpt($post, false);
         }
         ?>
     </section>

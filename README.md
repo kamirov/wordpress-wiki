@@ -30,9 +30,9 @@ Follow these instructions to install this wiki from scratch:
 
 1. Clone this repository.
 
-1. Fill in the `.htpasswd` file with your user authentication information.
-
 1. Download [Wordpress](https://wordpress.org/) into your project's root directory.
+
+1. Fill in the `.htpasswd` file with your user authentication information. Associate this file with your Wordpress installation in the root directories `.htaccess` file.
 
 1. From the root directory run `composer install` to download the parent theme and the non-edited plugins (you'll need to install [Composer](https://getcomposer.org) first).
 

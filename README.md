@@ -4,6 +4,8 @@ This is a theme and set of plugins I used to manage an internal wiki while worki
 
 It's good for anyone looking for a wiki for their team or company, but is especially useful for academic teams working with MATLAB.
 
+[See a demo](http://andreis.space/projects/wwe).
+
 ## Features
 
 WWE has a few interesting features:

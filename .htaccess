@@ -1,0 +1,5 @@
+# Authentication
+AuthType Basic
+AuthName "Wiki"
+AuthUserFile .htpasswd
+Require valid-user

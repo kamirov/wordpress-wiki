@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /*
  Theme Name:   Wordpress Wiki Extended (WWE) Theme
  Theme URI:    https://github.com/kamirov/wordpress-wiki-extended
@@ -13,7 +14,6 @@
 */
 /* FONTS
    ===== */
-@charset "UTF-8";
 .cat-title,
 .page-title,
 .entryTitle {
@@ -210,7 +210,7 @@ aside hr {
   /*padding: 0 0 15px 0;*/
 }
 .meta-search-form input {
-  width: 100%;
+  width: 100% !important;
 }
 .meta-search-form input:focus {
   width: 100% !important;
@@ -462,7 +462,6 @@ article.entry .entryContent dl dd {
   padding-top: 0.3rem;
   padding-bottom: 0.3rem;
   margin-left: 0 !important;
-  height: 40px;
 }
 article.entry .entryContent ol dt,
 article.entry .entryContent ul dt,
@@ -567,11 +566,11 @@ table thead th {
 #bug-library-list a,
 #bug-library-list a:visited {
   text-decoration: none;
-  color: #0066cc;
+  color: #0066CC;
 }
 #bug-library-list a:hover {
   text-decoration: none;
-  color: #cc0000;
+  color: #CC0000;
 }
 #bug-library-list tr td {
   padding: 6px;
@@ -676,7 +675,7 @@ table thead th {
 }
 #bug-library-filterchange {
   cursor: pointer;
-  color: #0066cc;
+  color: #0066CC;
 }
 #odd {
   background-color: #f9f9f9;

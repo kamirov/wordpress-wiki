@@ -206,7 +206,7 @@ class bug_library_plugin {
 				'rewrite'       => array( 'slug' => 'products' ),    // pretty permalinks for your taxonomy?
 				'add_new_item'  => 'Add New Product',
 				'new_item_name' => "New Product Name",
-				'show_ui'       => true,
+				'show_ui'       => false,
 				'show_tagcloud' => false
 			)
 		);
@@ -221,7 +221,7 @@ class bug_library_plugin {
 				'rewrite'       => array( 'slug' => 'status' ),    // pretty permalinks for your taxonomy?
 				'add_new_item'  => 'Add New Status',
 				'new_item_name' => "New Status",
-				'show_ui'       => true,
+				'show_ui'       => false,
 				'show_tagcloud' => false
 			)
 		);
@@ -236,7 +236,7 @@ class bug_library_plugin {
 				'rewrite'       => array( 'slug' => 'types' ),    // pretty permalinks for your taxonomy?
 				'add_new_item'  => 'Add New Type',
 				'new_item_name' => "New Type",
-				'show_ui'       => true,
+				'show_ui'       => false,
 				'show_tagcloud' => false
 			)
 		);
@@ -251,7 +251,7 @@ class bug_library_plugin {
 				'rewrite'       => array( 'slug' => 'priority' ),    // pretty permalinks for your taxonomy?
 				'add_new_item'  => 'Add New Priority',
 				'new_item_name' => "New Priority",
-				'show_ui'       => true,
+				'show_ui'       => false,
 				'show_tagcloud' => false
 			)
 		);

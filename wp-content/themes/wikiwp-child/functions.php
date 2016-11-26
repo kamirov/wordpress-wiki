@@ -3,9 +3,9 @@
 /* WIKI_PHP_INI
    ============ */
 
-@ini_set( 'upload_max_size' , '64M' );
-@ini_set( 'post_max_size', '64M');
-@ini_set( 'max_execution_time', '300' );
+@ini_set('upload_max_size', '64M');
+@ini_set('post_max_size', '64M');
+@ini_set('max_execution_time', '300');
 
 
 /* WIKI_CONSTANTS
@@ -14,7 +14,7 @@
 // Uploads
 define('ATTACHMENTS_DEFAULT_INSTANCE', false ); 
 define('ALLOW_UNFILTERED_UPLOADS', true);           // Used for wp-admin file uploads
-define('MATLAB_UPLOAD_USERNAME', 'wikiupload');
+define('MATLAB_UPLOAD_USERNAME', 'matlabber');
 define('FROM_MATLAB_KEY', 'from_matlab');           // HTTP request key to indicate we're requesting from MATLAB
 
 // Dates
@@ -884,10 +884,6 @@ function register_shortcodes()
    add_shortcode(MISC_DATES_TABLE_SHORTCODE, 'misc_dates_table');
    add_shortcode(RECENT_ARTICLES_SHORTCODE, 'recent_articles');
    add_shortcode(ALPHABETICAL_CONTENT_SHORTCODE, 'alphabetical_content');
-   add_shortcode(SENSORS_INVENTORY_SHORTCODE, 'sensors_inventory');
-   add_shortcode(SENSORS_AD_SHORTCODE, 'sensors_ad');
-   add_shortcode(SENSORS_AD_RANGE_SHORTCODE, 'sensors_ad_range');
-   add_shortcode(SENSORS_SHOW_SHORTCODE, 'sensors_show');
    add_shortcode(UPCOMING_TABLE_SHORTCODE, 'upcoming_table');
    add_shortcode(UPDATES_DROPDOWNS_SHORTCODE, 'updates_dropdowns');
    add_shortcode(UPDATES_SHOW_SHORTCODE, 'updates_show');
@@ -1076,10 +1072,6 @@ function wp_dashboard_recent_post_types( $args ) {
             {
                 $pre_text = 'Issue: ';
             }
-            elseif ($post_type == 'sensor')
-            {
-                $pre_text = 'Sensor: ';
-            }
             elseif ($post_type == 'paper')
             {
                 $pre_text = 'Paper: ';
@@ -1159,23 +1151,23 @@ function custom_wp_dashboard_site_activity() {
 // Make all edit screens follow format set by given user
 //if (is_admin()) 
 //{
-    if (class_exists('\GlobalMetaBoxOrder\Config'))
-    {
-        // The path to the configuation is rather long, so let's
-        // make us a shorthand.
-        class_alias('\GlobalMetaBoxOrder\Config', 'MetaBoxConfig');
+    // if (class_exists('\GlobalMetaBoxOrder\Config'))
+    // {
+    //     // The path to the configuation is rather long, so let's
+    //     // make us a shorthand.
+    //     class_alias('\GlobalMetaBoxOrder\Config', 'MetaBoxConfig');
 
-        MetaBoxConfig::$getBlueprintUserId = function () 
-        {                
-            // Whoever becomes the next wiki admin, feel free to change this to your own username
-            $user = get_user_by('slug', 'andrei');
-            return $user ? $user->ID : false; 
-        };        
-    }
-    else
-    {
-        echo 'Can\'t find metabox configuration class.';
-    }
+    //     MetaBoxConfig::$getBlueprintUserId = function () 
+    //     {                
+    //         // Whoever becomes the next wiki admin, feel free to change this to your own username
+    //         $user = get_user_by('slug', 'admin');
+    //         return $user ? $user->ID : false; 
+    //     };        
+    // }
+    // else
+    // {
+    //     echo 'Can\'t find metabox configuration class.';
+    // }
 //}
 
 function switch_on_comments_automatically(){
@@ -1374,12 +1366,12 @@ function load_editor_style() {
     add_editor_style( 'editor.css' );
 }
 add_action( 'admin_init', 'load_editor_style' );
-function load_admin_styles() 
-{
-    echo '<link rel="stylesheet" type="text/css" href="'.get_stylesheet_directory_uri().'/style.css">';
-}
-add_action('admin_head', 'load_admin_styles');
-add_action('admin_enqueue_scripts', 'load_admin_styles');
+// function load_admin_styles() 
+// {
+//     echo '<link rel="stylesheet" type="text/css" href="'.get_stylesheet_directory_uri().'/style.css">';
+// }
+// add_action('admin_head', 'load_admin_styles');
+// add_action('admin_enqueue_scripts', 'load_admin_styles');
 
 /* WIKI_MISC_UTILITY
    ================= */
@@ -1413,7 +1405,7 @@ function matlab_handler()
         $GLOBALS['IS_MATLAB_REQUEST'] = true;
 
         if ($is_read)
-            $func = 'matlab_read_'.$_GET['read_type'];
+            $func = 'matlab_read_'.$_GET['read_type'];      // This was only valid for some SAIL-specific data types. I've removed them in this more general wiki version'
         else
             $func = 'matlab_write_'.$_POST['write_type'];
 
@@ -1424,98 +1416,6 @@ function matlab_handler()
         $GLOBALS['IS_MATLAB_REQUEST'] = false;
     }
 }
-
-// Returns a sensor post type and its meta given its name. Does some filtering on which meta fields are taken.
-function matlab_read_sensor()
-{
-    $sensor_post = get_page_by_title($_GET['sensor_name'], OBJECT, 'sensor');
-    
-    if (!$sensor_post)
-        return;
-
-    $meta = get_metadata('post', $sensor_post->ID);
-    foreach ($meta as $key => &$item) 
-    {
-        if (substr($key, 0, 1) === "_")
-        {
-            unset($meta[$key]);                             // Keys starting with '_' can't be fields in MATLAB (also they don't contain useful info for us)
-        }
-        elseif ($decoded_item = json_decode($item[0]))
-            $item[0] = $decoded_item;
-    }
-    unset($item);
-   $sensor_post->meta = $meta;
-
-//    print_r($sensor_post->meta['history'][0]);    
-    echo json_encode($sensor_post);
-
-//   print_r($sensor_post);
-}
-
-// Makes/updates sensor on wiki
-function matlab_write_sensor() 
-{
-    // echo 'fiddlesticks';
-    // return;
-
-    $write_data =  json_decode(stripslashes($_POST['write_data']), true);
-    $write_data = $write_data['write_data'];
-
-    foreach ($write_data['meta'] as &$item) {
-        $decoded_item = json_decode($item, true);
-
-        if ($decoded_item)
-        {
-            // For all assoc arrays: move all children of the 'root' key to the root of the array
-            if (is_array($decoded_item) && isset($decoded_item['root']))
-            {
-                $item = json_encode($decoded_item['root']);
-            }                
-        }
-    }
-    unset($item);
-
-    // Make post data
-    $user = get_user_by('login', MATLAB_UPLOAD_USERNAME);   
-    $post_data = array(
-        'post_type' => 'sensor',
-        'post_title' => $write_data['post_title'],
-        'post_author' => $user->ID, 
-        'post_status' => 'publish',
-        'meta_input' => $write_data['meta']
-    );
-
-    $old_post = get_page_by_title($write_data['post_title'], OBJECT, 'sensor');
-    if ($old_post)
-    {
-        if ($write_data['is_update'])
-        {
-            $post_data['ID'] = $old_post->ID;
-            $post_id = wp_update_post($post_data);
-        }
-        else
-        {
-            echo $write_data['post_title'].' already has a wiki page. To update it, set is_update to true.';
-            return;
-        }
-    }
-    else
-    {
-        if ($write_data['is_update'])
-        {
-            echo $write_data['post_title'].' is not on the wiki. Confirm the sensor name is correct.';
-            return;
-        }
-        else
-        {
-            $post_id = wp_insert_post($post_data);             
-        }
-    }
-
-    if ($post_id)
-        echo '1';
-}
-
 
 // Adds an attachment to an article
 function matlab_write_attachment()

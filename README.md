@@ -1,6 +1,6 @@
 # Wordpress Wiki Extended (WWE)
 
-This is a theme and set of plugins I used to manage an internal wiki while working at the Space Avionics and Instrumentation Laboratory (SAIL) at Ryerson University in Canada.
+This is a theme and set of plugins I used to manage an internal wiki while working at the Space Avionics and Instrumentation Laboratory (SAIL) at Ryerson University in Canada. It is based in large part on the [WikiWP theme](http://wikiwp.com/), with a good deal of theme and plugin customization.
 
 It's good for anyone looking for a wiki for their team or company, but is especially useful for academic teams working with MATLAB.
 
@@ -30,11 +30,11 @@ Follow these instructions to install this wiki from scratch:
 
 1. Clone this repository.
 
+1. Fill in the `.htpasswd` file with your user authentication information.
+
 1. Download [Wordpress](https://wordpress.org/) into your project's root directory.
 
 1. From the root directory run `composer install` to download the parent theme and the non-edited plugins (you'll need to install [Composer](https://getcomposer.org) first).
-
-1. Delete `/wp-content/wikiwp/css/fonts.css`. This is a bit of a pain, but the alternative is to either (a) undo all the style changes this file makes or (b) dynamically remove this stylesheet with JS.
 
 1. Go through the Wordpress setup process (visit the project in a browser, follow the setup wizard's steps).
 
@@ -56,10 +56,8 @@ Follow these instructions to install this wiki from scratch:
 
 1. Configure admin screen aesthetics. Short of doing an SQL dump, I'm not sure of how to import/export the Wordpress metaboxes. So this step is a bit more freeform, based on how you feel about the admin interface for each of the post types and the dashboard. Visit each of the admin pages and show/hide unnecessary metaboxes.
 
+1. If you plan on using MATLAB with the wiki, modify the `url` and `opts.password` static properties in `matlab_wiki.m`.
+
 ## Support
 
 For any questions, send me a message at andrei.khramtsov@gmail.com.
-
-## Distribution Notes
-
-It's surprisingly tedious to distribute an existing Wordpress website

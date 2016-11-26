@@ -491,7 +491,7 @@ We make use of a special user - matlabber -  for the actual upload. Credentia
 		<wp:comment_status><![CDATA[open]]></wp:comment_status>
 		<wp:ping_status><![CDATA[closed]]></wp:ping_status>
 		<wp:post_name><![CDATA[wiki-documentation]]></wp:post_name>
-		<wp:status><![CDATA[private]]></wp:status>
+		<wp:status><![CDATA[publish]]></wp:status>
 		<wp:post_parent>0</wp:post_parent>
 		<wp:menu_order>0</wp:menu_order>
 		<wp:post_type><![CDATA[post]]></wp:post_type>
@@ -747,19 +747,19 @@ There are different types of 'posts' you can make on the wiki:
 To make a new post, hover over 'New' in the header bar (top of the page), or go to the wiki dashboard (click on 'Wiki' in header bar or your name in the sidebar).
 
 To edit an existing post, either:
-<ol>
+<ul>
  	<li>Navigate to that post and hit 'Edit' in the header bar. Some posts have other edit links visible.</li>
  	<li>Go to the wiki dashboard, select the post type in the side bar, then click on the post name.</li>
-</ol>
+</ul>
 <h1>Writing Articles</h1>
 <h2>Adding Media/Attachments</h2>
 Couple of ways:
-<ol>
+<ul>
  	<li>Drag-and-drop files directly onto the post. This places images where your cursor is and creates text-links to other file attachments.</li>
  	<li>Click "Add Media" and navigate the interface there.</li>
  	<li>Use the 'Attachments' box below the post editor. This places attachments in a list at the bottom of the post.</li>
  	<li>Use <code>matlab_wiki.upload_image()</code> or <code>matlab_wiki.upload_file()</code>. This also places attachments in the 'Attachments' box for the post.</li>
-</ol>
+</ul>
 <h2>Excerpts</h2>
 Recommend you fill out a post summary in the 'Excerpts' box below the post editor. Posts with excerpts display their excerpts on category pages.
 <h2>Tables of Contents</h2>

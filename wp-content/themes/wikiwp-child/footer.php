@@ -29,7 +29,7 @@
 		 '<strong>&copy;&nbsp;';
 	echo '&nbsp;<a href="'.esc_url( home_url() ).'">'.get_bloginfo('name').'</a></strong>',
 		 '&nbsp;&nbsp;|&nbsp;&nbsp;',
-		 'Powered by a heavily customized &nbsp;',
+		 'Powered by the <a href="https://github.com/kamirov/wordpress-wiki-extended">Wordpress Wiki Extended theme</a> - a heavily customized &nbsp;',
 		 '<a href="http://wikiwp.com" title="Wikipedia look-a-like theme for WordPress">WikiWP theme</a> and&nbsp;',
 		 '<a href="http://wordpress.org/" target="_blank">WordPress</a>. &nbsp; | &nbsp; <a class="footer-rss-link" href="'.get_bloginfo('rss2_url').'" title="RSS Feed">RSS</a>',
 	     '</p>',

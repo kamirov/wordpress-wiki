@@ -3,7 +3,7 @@
         <h1 class="entryTitle">
             <?php
             while ( have_posts() ) : the_post();
-            echo '<h1>Welcome to the SAIL Wiki!</h1>';
+            echo '<h1>Welcome to the Wiki!</h1>';
             ?>
         </h1>
     </header>

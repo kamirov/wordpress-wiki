@@ -48,8 +48,8 @@
                 $page_html .= '<ul>';
                 foreach ($pages as $page) 
                 {
-                    if ($page->ID == 17)                    // Issue Tracker
-                        $page->guid .= '&bugstatusid=14';   // Open status
+//                    if ($page->ID == 17)                    // Issue Tracker
+//                        $page->guid .= '&bugstatusid=14';   // Open status
                         // var_dump($page->guid);
                     $page_html .= '<li class="page-item"><a href="'.$page->guid.'" title="">'.$page->post_title.'</a></li>';
                 }
